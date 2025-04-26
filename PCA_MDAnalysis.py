@@ -17,7 +17,7 @@ print(pc.p_components.shape)
 
 print(f"PC1: {pc.variance[0]:.5f}")
 
-for i in range(5):
+for i in range(10):
     print(f"Cumulated variance: {pc.cumulated_variance[i]:.3f}")
 
 import matplotlib.font_manager as font_manager
