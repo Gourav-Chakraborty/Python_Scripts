@@ -5,7 +5,7 @@ import MDAnalysis as mda
 from MDAnalysis.analysis import pca, align
 import seaborn as sns
 
-u = mda.Universe("pNR_cter_7.5_Mg_all.prmtop", "pNR_cter_7.5_Mg_all.nc")
+u = mda.Universe("filename.prmtop", "filename.nc")
 
 aligner = align.AlignTraj(u, u, select='name CA',in_memory=True).run()
 pc = pca.PCA(u, select='name CA',align=True, mean=None,n_components=None).run()
@@ -35,15 +35,15 @@ for spine in plt.gca().spines.values():
 plt.tick_params(axis='x', which='both', direction='out', length=6, width=2)
 plt.tick_params(axis='y', which='both', direction='out', length=6, width=2)
 
-plt.savefig('pNR_cter_7.5_Mg_all_cumulative_variance.png', dpi=150, bbox_inches='tight')
+plt.savefig('cumulative_variance.png', dpi=150, bbox_inches='tight')
 
 transformed = pc.transform(CA, n_components=5)
 transformed.shape
 df = pd.DataFrame(transformed,
-                  columns=['PC{}'.format(i+1) for i in range(5)])
+                  columns=['PC{}'.format(i+1) for i in range(10)])
 df['Time (ps)'] = df.index * u.trajectory.dt
 df.head()
-df.to_csv('pNR_cter_7.5_Mg_all_pca_reduced_data.csv')
+df.to_csv('pca_reduced_data.csv')
 
 for i in range(5):
     cc = pca.cosine_content(transformed, i)
@@ -58,4 +58,4 @@ g.map(sns.lineplot,
       "Time (ps)", # x-axis
       "Value", # y-axis
       ci=None) # no confidence interval
-plt.savefig('pNR_cter_7.5_Mg_all_cosine_content.png', dpi = 150)    
+plt.savefig('cosine_content.png', dpi = 150)    
