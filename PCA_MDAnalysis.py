@@ -40,7 +40,7 @@ plt.savefig('cumulative_variance.png', dpi=150, bbox_inches='tight')
 transformed = pc.transform(CA, n_components=5)
 transformed.shape
 df = pd.DataFrame(transformed,
-                  columns=['PC{}'.format(i+1) for i in range(10)])
+                  columns=['PC{}'.format(i+1) for i in range(5)])
 df['Time (ps)'] = df.index * u.trajectory.dt
 df.head()
 df.to_csv('pca_reduced_data.csv')
